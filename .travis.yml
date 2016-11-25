@@ -8,3 +8,8 @@ env:
 before_install:
 - openssl aes-256-cbc -K $encrypted_529f76ee0a25_key -iv $encrypted_529f76ee0a25_iv
   -in deploy_key.enc -out deploy_key -d
+deploy:
+  provider: heroku
+  api_key:
+    secure: e1d0xe2+ooGAj7kuab04GuFhx+/1baUY1eWvyLz2N/4DEcsMEcsDX5xxuQPrfgo7Hecl5ZQcPmI+pGQhdXrjbU37m+hnppNQ5/I8WpC8PnDxtSTKs7A8Ngi+Kiw4qJYfvW9So0zrSQGERn14JdYUkCraNlmflVsdc0t61BcSEVNx/wEabUt8DQNQJm/4FkmjnprZ0Jzp7YOfQkbIZtO8Lm3+V/WOWNQS15lYksKqsyJdGD0enoNUrR0n4JioxkON7s7Eu5QEqfo2R+hdsyNLXtdFCM317OINCwYUBk9vdLOOjZy7itDmRNRmer9BI9cpMrS1y1GrraxFsN/i0pQjNwNXMtfbxV9mL/iIq1tkk7RjGX6yQ5vaBtC/99u2MfLutoe7A05l/BmFHNJDjhCiTa4U7shI3IIFokPkobzEU8aTv95qWw58JXvRoq2oyEI/Ow5ZMXzf7Z6eD1TfsVv3HEboQlNdyZNR9zBFp2YYuBD2kjfKoOrgVH6+7Z4n6ECrEdGLX6TcMKKr5vpi3WEXK+kWOwZuhG4wlA/sZ6gsNZfVXKp5gQemt1iJrWnvw1Gxh3fTo0kohlKccQg7hmYEpoFJMdxkJqUw+q4T/aYPzi4g0YI0HzBNsdaYNSd5IgvM2sk5/DG119r+o4UWZx4Z2M9R3a+WgBSpzZ99xKaEAvA=
+  app: xjtu-orange-juice
