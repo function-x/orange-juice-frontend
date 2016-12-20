@@ -1,0 +1,66 @@
+<template>
+  <div id="app">
+    <nav-bar id="nav-bar" :active-item="currentPath" @routeTo="route" :username="user"></nav-bar>
+    <router-view @routeTo="route" @login="login" @logout="logout"></router-view>
+  </div>
+</template>
+
+<script>
+import NavBar from './components/NavBar'
+import router from './router'
+import superagent from 'superagent'
+import configuration from '../configuration'
+
+export default {
+  name: 'app',
+  data () {
+    return {
+      currentPath: router.currentRoute.path,
+      user: ''
+    }
+  },
+  components: {
+    NavBar
+  },
+  methods: {
+    route (path) {
+      router.push({path})
+      this.currentPath = router.currentRoute.path
+    },
+    login () {
+      superagent
+      .get(configuration.url + '/user/profile')
+      .withCredentials()
+      .end((err, res) => {
+        if (!err && res.body.code === 0) {
+          this.user = res.body.body.username
+        }
+      })
+    },
+    logout () {
+      this.user = ''
+    }
+  },
+  created () {
+    this.login()
+  }
+}
+</script>
+
+<style>
+#nav-bar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  z-index: 1;
+}
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 80px;
+}
+</style>
