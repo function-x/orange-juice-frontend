@@ -5,6 +5,7 @@ SOURCE_BRANCH="master"
 TARGET_BRANCH="master"
 
 function doCompile {
+  npm run lint
   npm run build
 }
 

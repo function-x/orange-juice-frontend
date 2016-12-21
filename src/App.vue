@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <nav-bar id="nav-bar" :active-item="currentPath" @routeTo="route" :username="user"></nav-bar>
-    <router-view @routeTo="route" @login="login" @logout="logout"></router-view>
+    <router-view @routeTo="route" @login="updateLoginState" @logout="updateLoginState"></router-view>
   </div>
 </template>
 
@@ -27,22 +27,21 @@ export default {
       router.push({path})
       this.currentPath = router.currentRoute.path
     },
-    login () {
+    updateLoginState () {
       superagent
       .get(configuration.url + '/user/profile')
       .withCredentials()
       .end((err, res) => {
         if (!err && res.body.code === 0) {
           this.user = res.body.body.username
+        } else {
+          this.user = ''
         }
       })
-    },
-    logout () {
-      this.user = ''
     }
   },
   created () {
-    this.login()
+    this.updateLoginState()
   }
 }
 </script>

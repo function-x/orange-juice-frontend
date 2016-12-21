@@ -49,6 +49,12 @@ export default {
         } else if (res.body.code !== 0) {
           this.alert.type = 'error'
           this.alert.text = 'API错误' + res.body.code
+          // check if logged
+          if(res.body.code == 7) {
+            this.alert.text = '登录状态失效'
+            this.$emit('logout')
+            this.$emit('routeTo', '/login')
+          }
         } else {
           this.alert.type = 'success'
           this.alert.text = ''
