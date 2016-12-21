@@ -6,7 +6,6 @@ import LogoutPage from './components/LogoutPage'
 import ProfilePage from './components/ProfilePage'
 
 export default new VueRouter({
-  mode: 'history',
   routes: [
     {
       path: '/login',
