@@ -50,7 +50,7 @@ export default {
           this.alert.type = 'error'
           this.alert.text = 'API错误' + res.body.code
           // check if logged
-          if(res.body.code == 7) {
+          if (res.body.code === 7) {
             this.alert.text = '登录状态失效'
             this.$emit('logout')
             this.$emit('routeTo', '/login')
