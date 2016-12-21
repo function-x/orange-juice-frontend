@@ -53,7 +53,9 @@ export default {
           if (res.body.code === 7) {
             this.alert.text = '登录状态失效'
             this.$emit('logout')
-            this.$emit('routeTo', '/login')
+            setTimeout(() => {
+              this.$emit('routeTo', '/login')
+            }, 1000)
           }
         } else {
           this.alert.type = 'success'
