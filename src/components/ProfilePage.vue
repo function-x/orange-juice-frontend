@@ -39,6 +39,9 @@ export default {
     ElRow: Row,
     ElCol: Col
   },
+  props: [
+    'username'
+  ]
   created () {
     if (this.username === '') {
       this.alert.type = 'error'
