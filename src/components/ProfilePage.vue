@@ -73,7 +73,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .data {
   text-align: justify;
   font-size: 1.5em;
