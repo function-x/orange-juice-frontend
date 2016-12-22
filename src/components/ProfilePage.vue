@@ -41,7 +41,7 @@ export default {
   },
   props: [
     'username'
-  ]
+  ],
   created () {
     if (this.username === '') {
       this.alert.type = 'error'
