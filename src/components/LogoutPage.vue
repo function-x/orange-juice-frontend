@@ -12,6 +12,7 @@
 import { Alert, Row, Col } from 'element-ui'
 import superagent from 'superagent'
 import configuration from '../../configuration'
+import routeto from '../helpers/routeto'
 
 export default {
   name: 'logout-page',
@@ -26,7 +27,16 @@ export default {
     ElRow: Row,
     ElCol: Col
   },
+  props: [
+    'username'
+  ],
   created () {
+    if (this.username === '') {
+      this.type = 'error'
+      this.text = '未登录'
+      routeto(this, '/')
+      return
+    }
     superagent
       .get(configuration.url + '/user/sign-out')
       .withCredentials()
@@ -38,9 +48,7 @@ export default {
           this.type = 'success'
           this.text = '退出成功'
           this.$emit('logout')
-          setTimeout(() => {
-            this.$emit('routeTo', '/')
-          }, 1000)
+          routeto(this, '/')
         }
       })
   }

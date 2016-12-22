@@ -18,6 +18,7 @@
 import { Alert, Row, Col } from 'element-ui'
 import superagent from 'superagent'
 import configuration from '../../configuration'
+import routeto from '../helpers/routeto'
 
 export default {
   name: 'profile-page',
@@ -39,6 +40,12 @@ export default {
     ElCol: Col
   },
   created () {
+    if (this.username === '') {
+      this.alert.type = 'error'
+      this.alert.text = '未登录'
+      routeto(this, '/login')
+      return
+    }
     superagent
       .get(configuration.url + '/user/profile')
       .withCredentials()
@@ -53,9 +60,7 @@ export default {
           if (res.body.code === 7) {
             this.alert.text = '登录状态失效'
             this.$emit('logout')
-            setTimeout(() => {
-              this.$emit('routeTo', '/login')
-            }, 1000)
+            routeto(this, '/login')
           }
         } else {
           this.alert.type = 'success'

@@ -12,8 +12,9 @@
 
 <script>
 import RegisterForm from './RegisterForm'
-
 import { Row, Col, Alert } from 'element-ui'
+
+import routeto from '../helpers/routeto'
 
 export default {
   name: 'register-page',
@@ -53,9 +54,7 @@ export default {
         text: '注册成功',
         type: 'success'
       }
-      setTimeout(() => {
-        this.$emit('routeTo', '/')
-      }, 1000)
+      routeto(this, '/')
     }
   },
   components: {

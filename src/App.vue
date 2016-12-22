@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <nav-bar id="nav-bar" :active-item="currentPath" @routeTo="route" :username="user"></nav-bar>
-    <router-view @routeTo="route" @login="updateLoginState" @logout="updateLoginState"></router-view>
+    <router-view @routeTo="route" @login="updateLoginState" @logout="updateLoginState" :username="user"></router-view>
   </div>
 </template>
 

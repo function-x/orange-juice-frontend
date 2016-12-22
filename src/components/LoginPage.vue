@@ -12,6 +12,7 @@
 
 <script>
 import LoginForm from './LoginForm'
+import routeto from '../helpers/routeto'
 
 import { Row, Col, Alert } from 'element-ui'
 
@@ -44,9 +45,7 @@ export default {
         type: 'success'
       }
       this.$emit('login')
-      setTimeout(() => {
-        this.$emit('routeTo', '/')
-      }, 1000)
+      routeto(this, '/')
     }
   },
   components: {
