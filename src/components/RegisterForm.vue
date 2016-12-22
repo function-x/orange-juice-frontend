@@ -40,7 +40,9 @@ export default {
           { type: 'email', message: 'Email格式不正确', trigger: 'blur' }
         ],
         password: [
-          { required: true, message: '请输入密码', trigger: 'blur' }
+          { required: true, message: '请输入密码', trigger: 'blur' },
+          { min: 7, message: '请至少设置7位密码', trigger: 'blur' },
+          { pattern: /^([0-9]+[a-zA-Z]+|[a-zA-Z]+[0-9]+)[0-9a-zA-Z]*$/, message: '密码必须同时包含字母和数字', trigger: 'blur' }
         ]
       }
     }
