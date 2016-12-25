@@ -9,14 +9,17 @@
         <el-menu-item index="/register">注册</el-menu-item>
       </template>
       <template v-else>
-        <el-menu-item index="/profile">{{ username }}</el-menu-item>
+        <el-submenu index="user-menu">
+          <template slot="title">{{ username }}</template>
+          <el-menu-item index="/profile">个人信息</el-menu-item>
+          <el-menu-item index="/logout">退出登录</el-menu-item>
+        </el-submenu>
         <el-submenu index="problem-menu">
           <template slot="title">题目</template>
           <el-menu-item index="/problem/new">添加题目</el-menu-item>
           <el-menu-item index="/problems">我的题目</el-menu-item>
         </el-submenu>
         <el-menu-item index="/list/new">添加题单</el-menu-item>
-        <el-menu-item index="/logout">退出</el-menu-item>
       </template>
     </el-menu>
   </div>
