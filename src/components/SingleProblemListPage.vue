@@ -54,7 +54,7 @@ export default {
       routeto(this, '/lists/' + this.$route.params.id + '/add', 0)
     },
     viewProblem (row) {
-      routeto(this, '/problems/' + row.id)
+      routeto(this, '/problems/' + row.id, 0)
     }
   },
   created () {
