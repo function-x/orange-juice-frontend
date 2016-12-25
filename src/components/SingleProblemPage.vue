@@ -4,10 +4,10 @@
       <el-col :sm="9" :md="6">
         <el-alert v-show="alert.text" :type="alert.type" :title="alert.text"></el-alert>
         <div class="data" v-show="alert.text === ''">
-          <p class="field-name">用户名</p>
-          <p>{{ data.username }}</p>
-          <p class="field-name">Email</p>
-          <p>{{ data.email }}</p>
+          <p class="field-name">题目名</p>
+          <p>{{ data.title }}</p>
+          <p class="field-name">描述</p>
+          <p>{{ data.description }}</p>
         </div>
       </el-col>
     </el-row>
@@ -21,7 +21,7 @@ import configuration from '../../configuration'
 import routeto from '../helpers/routeto'
 
 export default {
-  name: 'profile-page',
+  name: 'single-problem-page',
   data () {
     return {
       alert: {
@@ -29,8 +29,8 @@ export default {
         text: '获取中...'
       },
       data: {
-        username: '',
-        email: ''
+        title: '',
+        descripton: ''
       }
     }
   },
@@ -40,17 +40,11 @@ export default {
     ElCol: Col
   },
   props: [
-    'username'
+    'title'
   ],
   created () {
-    if (this.username === '') {
-      this.alert.type = 'error'
-      this.alert.text = '未登录'
-      routeto(this, '/login')
-      return
-    }
     superagent
-      .get(configuration.url + '/user/profile')
+      .get(configuration.url + '/problem/' + this.$route.params.id)
       .withCredentials()
       .end((err, res) => {
         if (err) {
@@ -68,8 +62,8 @@ export default {
         } else {
           this.alert.type = 'success'
           this.alert.text = ''
-          this.data.username = res.body.user.username
-          this.data.email = res.body.user.email
+          this.data.title = res.body.problem.title
+          this.data.description = res.body.problem.description
         }
       })
   }

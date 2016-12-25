@@ -33,7 +33,7 @@ export default {
       .withCredentials()
       .end((err, res) => {
         if (!err && res.body.code === 0) {
-          this.user = res.body.body.username
+          this.user = res.body.user.username
         } else {
           this.user = ''
         }

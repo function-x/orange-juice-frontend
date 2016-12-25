@@ -1,13 +1,20 @@
 <template>
-  <div class="profilepage">
+  <div class="single-problem-list-page">
     <el-row type="flex" justify="center">
       <el-col :sm="9" :md="6">
         <el-alert v-show="alert.text" :type="alert.type" :title="alert.text"></el-alert>
         <div class="data" v-show="alert.text === ''">
-          <p class="field-name">用户名</p>
-          <p>{{ data.username }}</p>
-          <p class="field-name">Email</p>
-          <p>{{ data.email }}</p>
+          <p class="field-name">题单名</p>
+          <p>{{ data.name }}</p>
+          <el-table :data="data.problems">
+            <el-table-column prop="title" label="题目名"></el-table-column>
+            <el-table-column width="90px" :context="_self" inline-template label="操作">
+                <div>
+                <el-button @click="viewProblem(row)" type="info">查看</el-button>
+                </div>
+            </el-table-column>
+          </el-table>
+          <el-button class="new-problem" @click="newProblem" type="success">添加新题目</el-button>
         </div>
       </el-col>
     </el-row>
@@ -15,13 +22,13 @@
 </template>
 
 <script>
-import { Alert, Row, Col } from 'element-ui'
+import { Alert, Row, Col, Table, TableColumn, Button } from 'element-ui'
 import superagent from 'superagent'
 import configuration from '../../configuration'
 import routeto from '../helpers/routeto'
 
 export default {
-  name: 'profile-page',
+  name: 'single-problem-list-page',
   data () {
     return {
       alert: {
@@ -29,28 +36,30 @@ export default {
         text: '获取中...'
       },
       data: {
-        username: '',
-        email: ''
+        name: '',
+        problems: []
       }
     }
   },
   components: {
     ElAlert: Alert,
     ElRow: Row,
-    ElCol: Col
+    ElCol: Col,
+    ElTable: Table,
+    ElTableColumn: TableColumn,
+    ElButton: Button
   },
-  props: [
-    'username'
-  ],
-  created () {
-    if (this.username === '') {
-      this.alert.type = 'error'
-      this.alert.text = '未登录'
-      routeto(this, '/login')
-      return
+  methods: {
+    newProblem () {
+      routeto(this, '/lists/' + this.$route.params.id + '/add', 0)
+    },
+    viewProblem (row) {
+      routeto(this, '/problems/' + row.id)
     }
+  },
+  created () {
     superagent
-      .get(configuration.url + '/user/profile')
+      .get(configuration.url + '/problem_list/' + this.$route.params.id)
       .withCredentials()
       .end((err, res) => {
         if (err) {
@@ -68,8 +77,9 @@ export default {
         } else {
           this.alert.type = 'success'
           this.alert.text = ''
-          this.data.username = res.body.user.username
-          this.data.email = res.body.user.email
+          this.data.name = res.body.problemList.name
+          console.log(res.body.problems)
+          this.data.problems = res.body.problems.map(problem => ({title: problem.title, id: problem._id}))
         }
       })
   }
@@ -83,5 +93,8 @@ export default {
 }
 .field-name {
   font-weight: bold;
+}
+.new-problem{
+  margin-top: 20px;
 }
 </style>
