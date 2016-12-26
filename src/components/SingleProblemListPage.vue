@@ -8,13 +8,15 @@
           <p>{{ data.name }}</p>
           <el-table :data="data.problems">
             <el-table-column prop="title" label="题目名"></el-table-column>
-            <el-table-column width="90px" :context="_self" inline-template label="操作">
+            <el-table-column width="180px" :context="_self" inline-template label="操作">
                 <div>
                 <el-button @click="viewProblem(row)" type="info">查看</el-button>
+                <el-button @click="submitProblem(row)" type="warning">提交</el-button>
                 </div>
             </el-table-column>
           </el-table>
           <el-button class="new-problem" @click="newProblem" type="success">添加新题目</el-button>
+          <el-button class="new-problem" @click="viewSubmissions" type="info">查看所有提交</el-button>
         </div>
       </el-col>
     </el-row>
@@ -53,8 +55,14 @@ export default {
     newProblem () {
       routeto(this, '/lists/' + this.$route.params.id + '/add', 0)
     },
+    submitProblem (row) {
+      routeto(this, '/lists/' + this.$route.params.id + '/submit/' + row.id, 0)
+    },
     viewProblem (row) {
-      routeto(this, '/problems/' + row.id, 0)
+      routeto(this, '/lists/' + this.$route.params.id + '/view/' + row.id, 0)
+    },
+    viewSubmissions () {
+      routeto(this, '/' + this.$route.params.id + '/submissions', 0)
     }
   },
   created () {

@@ -21,6 +21,11 @@ import SingleProblemListPage from './components/SingleProblemListPage'
 import AddProblemToListPage from './components/AddProblemToListPage'
 import DoAddProblemToListPage from './components/DoAddProblemToListPage'
 
+import ListProblemViewPage from './components/ListProblemViewPage'
+import ListProblemSubmitPage from './components/ListProblemSubmitPage'
+
+import SubmissionsPage from './components/SubmissionsPage'
+
 export default new VueRouter({
   routes: [
     {
@@ -82,6 +87,18 @@ export default new VueRouter({
     {
       path: '/lists/:list_id/add/:problem_id',
       component: DoAddProblemToListPage
+    },
+    {
+      path: '/lists/:list_id/view/:problem_id',
+      component: ListProblemViewPage
+    },
+    {
+      path: '/lists/:list_id/submit/:problem_id',
+      component: ListProblemSubmitPage
+    },
+    {
+      path: '/:list_id/submissions',
+      component: SubmissionsPage
     }
   ]
 })
