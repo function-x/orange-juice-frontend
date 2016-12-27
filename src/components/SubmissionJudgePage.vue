@@ -21,6 +21,7 @@ import superagent from 'superagent'
 import configuration from '../../configuration'
 import routeto from '../helpers/routeto'
 import router from '../router'
+import { TextDecoder } from 'text-encoding'
 
 export default {
   name: 'submission-judge-page',
@@ -91,7 +92,7 @@ export default {
         } else {
           this.alert.type = 'success'
           this.alert.text = ''
-          this.data.submissionContent = new window.TextDecoder('utf8').decode(new Uint8Array(res.body.submission.body.data))
+          this.data.submissionContent = new TextDecoder('utf8').decode(new Uint8Array(res.body.submission.body.data))
         }
       })
   }
