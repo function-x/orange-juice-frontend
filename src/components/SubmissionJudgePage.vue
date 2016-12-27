@@ -20,6 +20,7 @@ import JudgeForm from './JudgeForm'
 import superagent from 'superagent'
 import configuration from '../../configuration'
 import routeto from '../helpers/routeto'
+import router from '../router'
 
 export default {
   name: 'submission-judge-page',
@@ -58,7 +59,7 @@ export default {
         text: '提交成功',
         type: 'success'
       }
-      routeto(this, '/')
+      setTimeout(() => { router.go(-1) }, 1000)
     }
   },
   props: [
