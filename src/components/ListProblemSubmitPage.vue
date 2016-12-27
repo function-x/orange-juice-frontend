@@ -4,7 +4,7 @@
       <el-col :sm="9" :md="6">
         <h1>提交题目</h1>
         <el-alert v-show="message.text" :title="message.text" :type="message.type"></el-alert>
-        <submit-form @error="error" @pending="pending" @success="success" operation="create"></submit-form>
+        <submit-form @error="error" @pending="pending" @success="success"></submit-form>
       </el-col>
     </el-row>
   </div>
@@ -29,7 +29,7 @@ export default {
   methods: {
     error (err) {
       this.message = {
-        text: err.message,
+        text: err,
         type: 'error'
       }
     },
@@ -44,7 +44,7 @@ export default {
         text: '提交成功',
         type: 'success'
       }
-      routeto(this, '/submissions')
+      routeto(this, '/' + this.$route.params.list_id + '/submissions')
     }
   },
   components: {

@@ -1,12 +1,11 @@
 <template>
-  <div class="registerform">
-    <h5 style="color: red;">// FIXME : No judger interface</h5>
-    <el-form @submit.prevent="register" :model="formData" :rules="rules" ref="form">
+  <div class="submitform">
+    <el-form @submit.prevent="submit" :model="formData" :rules="rules" ref="form">
       <el-form-item prop="content">
         <el-input placeholder="答案" type="textarea" v-model="formData.content"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="register" class="register-button">提交</el-button>
+        <el-button type="primary" @click="submit" class="submit-button">提交</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -32,32 +31,31 @@ export default {
     }
   },
   methods: {
-    register () {
+    submit () {
       this.$refs.form.validate((valid) => {
         if (valid) {
-          let data = {
-            problemId: this.$route.params.problem_id,
-            problemListId: this.$route.params.list_id,
-            // FIXME : No judger interface
-            judgerId: this.$route.params.list_id,
-            body: this.formData.content
-          }
-          this.$emit('pending')
-          superagent
-          .post(configuration.url + '/submission')
-          .withCredentials()
-          .send(data)
-          .end((err, res) => {
-            if (err) {
-              this.$emit('error', {code: -1, errors: 'network error'})
-            } else {
-              if (res.body.code === 0) {
-                this.$emit('success')
-              } else {
-                this.$emit('error', res.body)
+          this.$emit('pending');
+          (async () => {
+            try {
+              let problemList = await superagent
+                .get(configuration.url + '/problem_list/' + this.$route.params.list_id)
+                .withCredentials()
+              let data = {
+                problemId: this.$route.params.problem_id,
+                problemListId: this.$route.params.list_id,
+                judgerId: problemList.body.problemList.ownerId,
+                body: this.formData.content
               }
+              let submission = await superagent
+                .post(configuration.url + '/submission')
+                .withCredentials()
+                .send(data)
+              if (submission.body.code === 0) this.$emit('success')
+              else this.$emit('error', 'API错误' + submission.body.code)
+            } catch (err) {
+              this.$emit('error', '网络错误')
             }
-          })
+          })()
         }
       })
     }
@@ -73,7 +71,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.register-button {
+.submit-button {
   width: 100%
 }
 </style>

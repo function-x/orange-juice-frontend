@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <nav-bar id="nav-bar" :active-item="currentPath" @routeTo="route" :username="user"></nav-bar>
-    <router-view @routeTo="route" @login="updateLoginState" @logout="updateLoginState" :username="user"></router-view>
+    <router-view @routeTo="route" @login="updateLoginState" @logout="updateLoginState" :username="user" :userid="userid"></router-view>
   </div>
 </template>
 
@@ -16,7 +16,8 @@ export default {
   data () {
     return {
       currentPath: router.currentRoute.path,
-      user: ''
+      user: '',
+      userid: ''
     }
   },
   components: {
@@ -34,8 +35,10 @@ export default {
       .end((err, res) => {
         if (!err && res.body.code === 0) {
           this.user = res.body.user.username
+          this.userid = res.body.user._id
         } else {
           this.user = ''
+          this.userid = ''
         }
       })
     }

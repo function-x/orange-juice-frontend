@@ -25,6 +25,7 @@ import ListProblemViewPage from './components/ListProblemViewPage'
 import ListProblemSubmitPage from './components/ListProblemSubmitPage'
 
 import SubmissionsPage from './components/SubmissionsPage'
+import SubmissionJudgePage from './components/SubmissionJudgePage'
 
 export default new VueRouter({
   routes: [
@@ -99,6 +100,10 @@ export default new VueRouter({
     {
       path: '/:list_id/submissions',
       component: SubmissionsPage
+    },
+    {
+      path: '/judge/:submission_id',
+      component: SubmissionJudgePage
     }
   ]
 })
